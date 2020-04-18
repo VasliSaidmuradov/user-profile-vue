@@ -1,0 +1,26 @@
+@import './validation.scss';
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+$bg1: #fdfdfd;
+$main-color: #0084bf;
+$main-text-color: #444;
+$secondary-text-color: #a2a2a2;
+
+$test: red;
+
+
+$border: 1px solid #0084bf;
+$border-radius: .25rem;
+
+.d-none {
+  display: none;
+}
+
+.test {
+  color: red;
+}
