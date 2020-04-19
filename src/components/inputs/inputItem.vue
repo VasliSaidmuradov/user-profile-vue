@@ -20,12 +20,13 @@
       class="custom-radio-button"
       :class="{'custom-radio-button__checked': input.checked}"
     ></span>
-    <span v-if="input.type === 'file'" class="custom-file-input">{{ input.placeholder }}</span>
+    <span v-if="input.type === 'file'" class="custom-file-input">{{ fileName }}</span>
     <span
-      v-if="input.type === 'date'"
+      v-if="input.type === 'date' && !fieldValue.date"
       class="custom-date-placeholder"
       :class="{ 'd-none': hide, 'is-required': validationData.date }"
     >{{ input.placeholder }}*</span>
+    <!-- {{ fileName }} -->
   </label>
 </template>
 
@@ -59,6 +60,7 @@ export default {
         sms: "",
         mail: ""
       },
+      file: "",
       mask: "",
       addMasked: {
         iin: "### ### ### ###",
@@ -75,6 +77,14 @@ export default {
         notification: "X"
       }
     };
+  },
+  mounted() {
+    const keys = Object.keys(this.fieldValue);
+    for (let key of keys) {
+      if (localStorage.getItem(`${key}`)) {
+        this.fieldValue[key] = localStorage.getItem(`${key}`);
+      }
+    }
   },
   methods: {
     showFileName() {
@@ -105,6 +115,10 @@ export default {
     },
     addWhitespacesToNumber(num) {
       num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+    },
+    setToLocalStorage() {
+      const field = this.fieldValue[this.input.name];
+      localStorage.setItem(`${this.input.name}`, field);
     },
     validate() {
       const { isRequired, valid, name } = { ...this.input };
@@ -138,7 +152,22 @@ export default {
       }
     }
   },
-  computed: {}
+  computed: {
+    fileName() {
+      const re = /\w+\.\w+$/gi;
+      const fileName =
+        localStorage.getItem("file") &&
+        localStorage.getItem("file") !== undefined
+          ? localStorage
+              .getItem("file")
+              .match(re)
+              .join("")
+          : "Выберите файл...";
+      const name = fileName || this.input.placeholder;
+      console.log(">>>", fileName);
+      return name;
+    }
+  }
 };
 </script>
 

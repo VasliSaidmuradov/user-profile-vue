@@ -119,6 +119,7 @@ export default {
   methods: {
     saveData() {
       this.$refs.inputList.validate();
+      this.$refs.inputList.setTo();
     },
     handleChecked(e) {
       const inputs = this.inputs.inputGroup2;

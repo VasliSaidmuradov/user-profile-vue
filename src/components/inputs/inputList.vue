@@ -32,6 +32,10 @@ export default {
     validate() {
       const requiredFields = this.$refs.inputItem;
       requiredFields.forEach(el => el.validate());
+    },
+    setTo() {
+      const items = this.$refs.inputItem;
+      items.forEach(el => el.setToLocalStorage());
     }
   }
 };
